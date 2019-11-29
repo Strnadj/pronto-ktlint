@@ -20,6 +20,10 @@ jobs:
       with:
         version: 2.6.x
 
+    - name: Install ktlint
+      run: |
+        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.35.0/ktlint && chmod a+x ktlint
+
     - name: Run tests
       run: |
         bundle install
