@@ -29,7 +29,7 @@ module Pronto
     def inspect(patch)
       offences = lint(patch.new_file_full_path.to_s)
 
-      return [] unless offences || offences[0]
+      return [] if offences.nil? || offences[0].nil? || offences[0]['errors'].nil?
 
       offences[0]['errors'].map do |violation|
         patch.added_lines
