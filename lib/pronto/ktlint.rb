@@ -1,6 +1,5 @@
 require 'pronto'
 require 'open3'
-require 'byebug'
 
 module Pronto
   class Ktlint < Runner
