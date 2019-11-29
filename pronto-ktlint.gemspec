@@ -5,13 +5,13 @@ require 'pronto/ktlint/version'
 require 'English'
 
 Gem::Specification.new do |s|
-  s.name = 'pronto-rubocop'
+  s.name = 'pronto-ktlint'
   s.version = Pronto::KtlintVersion::VERSION
   s.platform = Gem::Platform::RUBY
   s.author = 'Jan Strnadek'
   s.email = 'jan.strnadek@gmail.com'
   s.homepage = 'http://github.com/Strnadj/pronto-ktlint'
-  s.summary = 'Pronto runner for Rubocop, ruby code analyzer'
+  s.summary = 'Pronto runner for Ktlint, kotlin code analyzer'
 
   s.licenses = ['MIT']
   s.required_ruby_version = '>= 2.3.0'
