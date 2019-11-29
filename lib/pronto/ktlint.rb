@@ -1,5 +1,6 @@
 require 'pronto'
-require 'pronto/ktlint/wrapper'
+require 'open3'
+require 'byebug'
 
 module Pronto
   class Ktlint < Runner
@@ -15,8 +16,19 @@ module Pronto
 
     private
 
+    def lint(path)
+      stdout, stderr, _status = Open3.capture3("ktlint \"#{path}\" --reporter=json")
+
+      puts "WARN: stderr #{stderr}" if stderr && stderr.size > 0
+      return [] if stdout.nil? || stdout.size == 0
+      JSON.parse(stdout)
+    rescue => e
+      puts "ERROR: pronto-ktlint failed to process a diff: #{e}"
+      []
+    end
+
     def inspect(patch)
-      offences = ::Pronto::Ktlint::Wrapper.new(patch.new_file_full_path.to_s)
+      offences = lint(patch.new_file_full_path.to_s)
 
       offences[0]['errors'].map do |violation|
         patch.added_lines
@@ -31,7 +43,7 @@ module Pronto
       Message.new(path, line, level, violation['message'], nil, self.class)
     end
 
-    def kt_files?(path)
+    def kt_file?(path)
       %w(.kt).include? File.extname(path)
     end
 
