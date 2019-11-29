@@ -29,6 +29,8 @@ module Pronto
     def inspect(patch)
       offences = lint(patch.new_file_full_path.to_s)
 
+      return [] unless offences || offences[0]
+
       offences[0]['errors'].map do |violation|
         patch.added_lines
              .select { |line| line.new_lineno == violation['line'] }
